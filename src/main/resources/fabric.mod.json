@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"id": "nyctoplus",
+	"version": "${version}",
+	"name": "NyctoPlus",
+	"description": "",
+	"authors": [
+		"MrSterner"
+	],
+	"contact": {
+	},
+	"license": "ARR",
+	"icon": "assets/nyctoplus/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.sterner.NyctoPlus"
+		],
+		"client": [
+			"dev.sterner.NyctoPlusClient"
+		],
+		"fabric-datagen": [
+			"dev.sterner.NyctoPlusDataGenerator"
+		]
+	},
+	"mixins": [
+		"nyctoplus.mixins.json",
+		{
+			"config": "nyctoplus.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"accessWidener": "nyctoplus.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20-rc.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
