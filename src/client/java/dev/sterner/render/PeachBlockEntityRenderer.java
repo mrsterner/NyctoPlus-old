@@ -43,11 +43,10 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
     @Override
     public void render(PeachBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         BlockState blockState = entity.getCachedState();
-        Direction direction = blockState.get(WallSkullBlock.FACING);
         int k = blockState.get(PeachBlock.ROTATION);
         float h = RotationPropertyHelper.toDegrees(k);
         RenderLayer renderLayer = getRenderLayer(entity.getOwner());
-        renderSkull(direction, h, matrices, vertexConsumers, light, MODEL, renderLayer);
+        renderSkull(null, h, matrices, vertexConsumers, light, MODEL, renderLayer);
     }
 
     public static void renderSkull(@Nullable Direction direction, float yaw, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, SkullBlockEntityModel model, RenderLayer renderLayer) {

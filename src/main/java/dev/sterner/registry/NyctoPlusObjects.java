@@ -22,7 +22,7 @@ public interface NyctoPlusObjects {
     Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 
     Block PEACH_LOG = register("peach_log", new PeachLogBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG).dropsNothing()), true);
-    Block PEACH_CORE_LOG = register("peach_core_log", new PeachCoreLogBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG).dropsNothing()), true);
+    Block PEACH_CORE_LOG = register("peach_core_log", new PeachCoreLogBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_NYLIUM).dropsNothing()), true);
 
     Block PEACH = register("peach", new PeachBlock(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK)), true);
 

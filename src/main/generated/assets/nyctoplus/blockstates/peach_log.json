@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,variants=0": {
+      "model": "nyctoplus:block/peach_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,variants=1": {
+      "model": "nyctoplus:block/peach_log_variant",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,variants=0": {
+      "model": "nyctoplus:block/peach_log"
+    },
+    "axis=y,variants=1": {
+      "model": "nyctoplus:block/peach_log_variant"
+    },
+    "axis=z,variants=0": {
+      "model": "nyctoplus:block/peach_log",
+      "x": 90
+    },
+    "axis=z,variants=1": {
+      "model": "nyctoplus:block/peach_log_variant",
+      "x": 90
+    }
+  }
+}

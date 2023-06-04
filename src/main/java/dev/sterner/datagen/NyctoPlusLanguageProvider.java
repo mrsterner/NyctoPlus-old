@@ -1,0 +1,18 @@
+package dev.sterner.datagen;
+
+import dev.sterner.registry.NyctoPlusObjects;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+
+public class NyctoPlusLanguageProvider extends FabricLanguageProvider {
+    public NyctoPlusLanguageProvider(FabricDataOutput dataOutput) {
+        super(dataOutput);
+    }
+
+    @Override
+    public void generateTranslations(TranslationBuilder builder) {
+        builder.add(NyctoPlusObjects.PEACH_LOG, "Peach Log");
+        builder.add(NyctoPlusObjects.PEACH_CORE_LOG, "Peach Core Log");
+        builder.add(NyctoPlusObjects.PEACH, "Peach");
+    }
+}
