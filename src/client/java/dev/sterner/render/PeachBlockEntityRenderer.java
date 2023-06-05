@@ -28,6 +28,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.RotationPropertyHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,7 +54,8 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
         matrices.push();
         float f = 0.25F;
         if (direction == null) {
-            matrices.translate(0.5F, 0.0F, 0.5F);
+            matrices.translate(0.5F, 0.6F, 0.5F);
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(45));
         } else {
             matrices.translate(0.5F - (float) direction.getOffsetX() * f, f, 0.5F - (float) direction.getOffsetZ() * f);
         }

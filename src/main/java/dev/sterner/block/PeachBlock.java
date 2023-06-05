@@ -39,7 +39,7 @@ public class PeachBlock extends BlockWithEntity {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0);
+        return Block.createCuboidShape(4.0, 9.0, 4.0, 12.0, 16.0, 12.0);
     }
 
     @Nullable

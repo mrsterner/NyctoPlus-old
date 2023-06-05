@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
     "bottom": "nyctoplus:block/peach_log_bottom",
-    "side": "nyctoplus:block/peach_log_side",
+    "side": "nyctoplus:block/peach_log_side_variant",
     "top": "nyctoplus:block/peach_log_top"
   }
 }
