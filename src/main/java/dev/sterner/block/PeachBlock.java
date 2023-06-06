@@ -2,10 +2,7 @@ package dev.sterner.block;
 
 import com.mojang.authlib.GameProfile;
 import dev.sterner.blockentity.PeachBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -32,10 +29,19 @@ public class PeachBlock extends BlockWithEntity {
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;
     public static final IntProperty ROTATION = Properties.ROTATION;
     public static final IntProperty PITCH = IntProperty.of("pitch", 0, RotationPropertyHelper.getMax());
+    private Type type = Type.NONE;
 
     public PeachBlock(Settings settings) {
         super(settings);
         this.setDefaultState((this.stateManager.getDefaultState()).with(ROTATION, 0).with(PITCH, 0));
+    }
+
+    public Type getSkullType() {
+        return this.type;
+    }
+
+    public void setSkullType(Type type){
+        this.type = type;
     }
 
     @Override
@@ -86,5 +92,13 @@ public class PeachBlock extends BlockWithEntity {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(ROTATION).add(PITCH);
+    }
+
+    enum Type{
+        NONE,
+        PLAYER,
+        VILLAGER,
+        PILLAGER,
+        PIGLIN
     }
 }

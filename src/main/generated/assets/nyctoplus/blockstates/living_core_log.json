@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "nyctoplus:block/living_core_log"
+    }
+  }
+}

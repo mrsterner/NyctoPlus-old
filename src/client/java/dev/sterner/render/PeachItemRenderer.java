@@ -42,6 +42,9 @@ public class PeachItemRenderer implements BuiltinItemRendererRegistry.DynamicIte
         PeachModel peachModel = new PeachModel(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(PeachModel.LAYER));
         LeafModel leaf = new LeafModel(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(LeafModel.LAYER));
         RenderLayer renderLayer = PeachBlockEntityRenderer.getRenderLayer(gameProfile);
+        matrices.push();
+        matrices.translate(0,-0.5,0);
         PeachBlockEntityRenderer.renderSkull(null, null, 180.0F, 0, matrices, vertexConsumers, light, skullBlockEntityModel, peachModel, leaf, renderLayer);
+        matrices.pop();
     }
 }

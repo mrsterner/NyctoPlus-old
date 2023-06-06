@@ -34,7 +34,7 @@ public class NyctoPlus implements ModInitializer {
                 .icon(() -> new ItemStack(NyctoPlusObjects.PEACH_LOG.asItem()))
                 .entries((ctx, entries) -> {
                     entries.add(NyctoPlusObjects.PEACH_LOG);
-                    entries.add(NyctoPlusObjects.PEACH_CORE_LOG);
+                    entries.add(NyctoPlusObjects.LIVING_CORE_LOG);
                     entries.add(NyctoPlusObjects.PEACH);
                 })
                 .build();

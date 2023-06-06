@@ -1,9 +1,11 @@
 package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
+import dev.sterner.PeachBlockItem;
 import dev.sterner.block.PeachBlock;
-import dev.sterner.block.PeachCoreLogBlock;
+import dev.sterner.block.LivingCoreLogBlock;
 import dev.sterner.block.PeachLogBlock;
+import dev.sterner.item.DebugWand;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -21,26 +23,33 @@ public interface NyctoPlusObjects {
     Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 
     Block PEACH_LOG = register("peach_log", new PeachLogBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG).dropsNothing()), true);
-    Block PEACH_CORE_LOG = register("peach_core_log", new PeachCoreLogBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_NYLIUM).dropsNothing()), true);
+    Block LIVING_CORE_LOG = register("living_core_log", new LivingCoreLogBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_NYLIUM).dropsNothing()), true);
 
-    Block PEACH = register("peach", new PeachBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_FUNGUS)), true);
+    Block PEACH = registerPeach("peach", new PeachBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_FUNGUS)), true);
+
+    Item DEBUG_WAND = register("debug_wand", new DebugWand(new Item.Settings()));
 
     static <T extends Item> T register(String name, T item) {
         ITEMS.put(item, NyctoPlus.id(name));
         return item;
     }
 
-    static <T extends Block> T register(String name, T block, Item.Settings settings, boolean createItem) {
+    static <T extends Block> T register(String name, T block, BlockItem blockItem, boolean createItem) {
         BLOCKS.put(block, NyctoPlus.id(name));
         if (createItem) {
-            ITEMS.put(new BlockItem(block, settings), BLOCKS.get(block));
+            ITEMS.put(blockItem, BLOCKS.get(block));
         }
         return block;
     }
 
     static <T extends Block> T register(String name, T block, boolean createItem) {
-        return register(name, block, new Item.Settings(), createItem);
+        return register(name, block, new BlockItem(block, new Item.Settings()), createItem);
     }
+
+    static <T extends Block> T registerPeach(String name, T block, boolean createItem) {
+        return register(name, block, new PeachBlockItem(block, new Item.Settings()), createItem);
+    }
+
 
     static void init() {
         BLOCKS.keySet().forEach(block -> Registry.register(Registries.BLOCK, BLOCKS.get(block), block));

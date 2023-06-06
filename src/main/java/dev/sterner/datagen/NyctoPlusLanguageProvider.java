@@ -12,7 +12,7 @@ public class NyctoPlusLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         builder.add(NyctoPlusObjects.PEACH_LOG, "Peach Log");
-        builder.add(NyctoPlusObjects.PEACH_CORE_LOG, "Peach Core Log");
+        builder.add(NyctoPlusObjects.LIVING_CORE_LOG, "Living Core Log");
         builder.add(NyctoPlusObjects.PEACH, "Peach");
     }
 }

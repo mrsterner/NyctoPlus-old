@@ -2,7 +2,7 @@ package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
 import dev.sterner.blockentity.PeachBlockEntity;
-import dev.sterner.blockentity.PeachCoreBlockEntity;
+import dev.sterner.blockentity.LivingCoreBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -16,8 +16,8 @@ import java.util.Map;
 public interface NyctoPlusBlockEntityTypes {
     Map<BlockEntityType<?>, Identifier> BLOCK_ENTITY_TYPES = new LinkedHashMap<>();
 
-    BlockEntityType<PeachCoreBlockEntity> PEACH_CORE_BLOCK_ENTITY = register("peach_core", FabricBlockEntityTypeBuilder
-            .create(PeachCoreBlockEntity::new, NyctoPlusObjects.PEACH_CORE_LOG).build(null));
+    BlockEntityType<LivingCoreBlockEntity> LIVING_CORE_BLOCK_ENTITY = register("living_core", FabricBlockEntityTypeBuilder
+            .create(LivingCoreBlockEntity::new, NyctoPlusObjects.LIVING_CORE_LOG).build(null));
 
     BlockEntityType<PeachBlockEntity> PEACH_BLOCK_ENTITY = register("peach", FabricBlockEntityTypeBuilder
             .create(PeachBlockEntity::new, NyctoPlusObjects.PEACH).build(null));

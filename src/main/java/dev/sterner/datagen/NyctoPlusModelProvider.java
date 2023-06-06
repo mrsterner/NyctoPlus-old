@@ -16,6 +16,7 @@ public class NyctoPlusModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
+        generator.registerSimpleCubeAll(NyctoPlusObjects.LIVING_CORE_LOG);
         registerPeachLog(generator, NyctoPlusObjects.PEACH_LOG);
 
         generator.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("skull"), Blocks.SOUL_SAND)

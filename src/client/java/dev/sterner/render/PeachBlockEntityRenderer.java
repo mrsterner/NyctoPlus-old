@@ -15,6 +15,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.SkullEntityModel;
 import net.minecraft.client.util.DefaultSkinHelper;
@@ -44,6 +45,8 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
 
     @Override
     public void render(PeachBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+
+
         BlockState blockState = entity.getCachedState();
         int k = blockState.get(PeachBlock.ROTATION);
         int j = blockState.get(PeachBlock.PITCH);
@@ -54,7 +57,7 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
     }
 
     public static void renderSkull(@Nullable Vec3d vec3d, @Nullable Direction direction, float yaw, float pitch, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, SkullEntityModel model, PeachModel peachModel, LeafModel leaf, RenderLayer renderLayer) {
-        float peachAlpha = 1.0F;
+        float skullAlpha = 1.0F;
 
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player != null && vec3d != null) {
@@ -62,14 +65,13 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
             double distance = MathHelper.sqrt((float) client.player.squaredDistanceTo(vec3d));
 
             if (distance >= MAX_DISTANCE) {
-                peachAlpha = 0.0F;
-            } else if (distance <= MIN_DISTANCE) {
-            } else {
+                skullAlpha = 0.0F;
+            } else if (distance > MIN_DISTANCE) {
                 double t = (distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE);
-                peachAlpha = (float) (1.0 - t);
+                skullAlpha = (float) (1.0 - t);
             }
         }
-        float skullAlpha = 1.0F - peachAlpha;
+        float alpha = 1.0F - skullAlpha;
 
         matrices.push();
         float f = 0.25F;
@@ -83,16 +85,16 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(renderLayer);
         model.setHeadRotation(0, yaw, pitch);
-        model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, peachAlpha);
+        model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0f);
 
 
         vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE));
         matrices.translate(0, -1.5, 0);
         leaf.setHeadRotation(0, yaw, pitch);
-        leaf.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, peachAlpha);
+        leaf.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0f);
 
         peachModel.setHeadRotation(0, yaw, pitch);
-        peachModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, skullAlpha);
+        peachModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, alpha);
 
         matrices.pop();
     }
