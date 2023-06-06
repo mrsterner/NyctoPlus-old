@@ -16,6 +16,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationPropertyHelper;
@@ -29,19 +30,10 @@ public class PeachBlock extends BlockWithEntity {
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;
     public static final IntProperty ROTATION = Properties.ROTATION;
     public static final IntProperty PITCH = IntProperty.of("pitch", 0, RotationPropertyHelper.getMax());
-    private Type type = Type.NONE;
 
     public PeachBlock(Settings settings) {
         super(settings);
         this.setDefaultState((this.stateManager.getDefaultState()).with(ROTATION, 0).with(PITCH, 0));
-    }
-
-    public Type getSkullType() {
-        return this.type;
-    }
-
-    public void setSkullType(Type type){
-        this.type = type;
     }
 
     @Override
@@ -94,11 +86,21 @@ public class PeachBlock extends BlockWithEntity {
         builder.add(ROTATION).add(PITCH);
     }
 
-    public enum Type{
-        NONE,
-        PLAYER,
-        VILLAGER,
-        PILLAGER,
-        PIGLIN
+    public enum Type implements StringIdentifiable {
+        PLAYER("piglin"),
+        VILLAGER("villager"),
+        PILLAGER("pillager"),
+        PIGLIN("piglin");
+
+        final String name;
+
+        Type(String name){
+            this.name = name;
+        }
+
+        @Override
+        public String asString() {
+            return this == PLAYER ? PLAYER.name : this == VILLAGER ? VILLAGER.name : this == PILLAGER ? PILLAGER.name : PIGLIN.name;
+        }
     }
 }
