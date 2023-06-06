@@ -230,7 +230,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                         this.manager.growHead(playerEntity, blockEntity.getGrowPos());
                         return true;
                     } else if (entity instanceof VillagerEntity){
-                        this.manager.growHead(blockEntity.getGrowPos());
+                        this.manager.growHead(world, blockEntity.getGrowPos(), PeachBlock.Type.VILLAGER);
                         return true;
                     }
                 }

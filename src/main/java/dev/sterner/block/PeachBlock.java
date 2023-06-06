@@ -94,7 +94,7 @@ public class PeachBlock extends BlockWithEntity {
         builder.add(ROTATION).add(PITCH);
     }
 
-    enum Type{
+    public enum Type{
         NONE,
         PLAYER,
         VILLAGER,
