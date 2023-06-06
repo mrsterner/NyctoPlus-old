@@ -44,7 +44,7 @@ public class PeachCoreBlockEntity extends BlockEntity implements GameEventListen
     }
 
     private BlockPos getGrowPos() {
-        if(availableGrowthNodes.isEmpty() || world == null){
+        if (availableGrowthNodes.isEmpty() || world == null) {
             return null;
         }
         int picked = world.getRandom().nextBetween(0, availableGrowthNodes.size());

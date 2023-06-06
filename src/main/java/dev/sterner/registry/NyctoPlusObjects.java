@@ -5,7 +5,6 @@ import dev.sterner.block.PeachBlock;
 import dev.sterner.block.PeachCoreLogBlock;
 import dev.sterner.block.PeachLogBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -24,7 +23,7 @@ public interface NyctoPlusObjects {
     Block PEACH_LOG = register("peach_log", new PeachLogBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG).dropsNothing()), true);
     Block PEACH_CORE_LOG = register("peach_core_log", new PeachCoreLogBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_NYLIUM).dropsNothing()), true);
 
-    Block PEACH = register("peach", new PeachBlock(FabricBlockSettings.copyOf(Blocks.BONE_BLOCK)), true);
+    Block PEACH = register("peach", new PeachBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_FUNGUS)), true);
 
     static <T extends Item> T register(String name, T item) {
         ITEMS.put(item, NyctoPlus.id(name));

@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 public class NyctoPlusModelProvider extends FabricModelProvider {
@@ -33,11 +32,11 @@ public class NyctoPlusModelProvider extends FabricModelProvider {
         generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block)
                 .coordinate(BlockStateModelGenerator.createAxisRotatedVariantMap())
                 .coordinate(BlockStateVariantMap.create(PeachLogBlock.VARIANTS)
-                        .register(0, BlockStateVariant.create()//TODO make use of the variant texture in the variant model
+                        .register(0, BlockStateVariant.create()
                                 .put(VariantSettings.MODEL, TexturedModel.CUBE_BOTTOM_TOP.upload(block, generator.modelCollector)))
                         .register(1, BlockStateVariant.create()
                                 .put(VariantSettings.MODEL, TexturedModel.CUBE_BOTTOM_TOP.get(block).textures((textureMap) -> {
-            textureMap.put(TextureKey.SIDE, identifier);
-        }).upload(block, "_variant", generator.modelCollector)))));
+                                    textureMap.put(TextureKey.SIDE, identifier);
+                                }).upload(block, "_variant", generator.modelCollector)))));
     }
 }

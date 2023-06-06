@@ -30,11 +30,12 @@ import org.jetbrains.annotations.Nullable;
 public class PeachBlock extends BlockWithEntity {
     public static final int MAX_ROTATION_INDEX = RotationPropertyHelper.getMax();
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;
-    public static final IntProperty ROTATION = Properties.ROTATION;;
+    public static final IntProperty ROTATION = Properties.ROTATION;
+    public static final IntProperty PITCH = IntProperty.of("pitch", 0, RotationPropertyHelper.getMax());
 
     public PeachBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((this.stateManager.getDefaultState()).with(ROTATION, 0));
+        this.setDefaultState((this.stateManager.getDefaultState()).with(ROTATION, 0).with(PITCH, 0));
     }
 
     @Override
@@ -69,21 +70,21 @@ public class PeachBlock extends BlockWithEntity {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState)this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw()));
+        return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw())).with(PITCH, RotationPropertyHelper.fromYaw(- ctx.getPlayer().getPitch()));
     }
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(ROTATION, rotation.rotate((Integer)state.get(ROTATION), MAX_ROTATIONS));
+        return state.with(ROTATION, rotation.rotate(state.get(ROTATION), MAX_ROTATIONS));
     }
 
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return (BlockState)state.with(ROTATION, mirror.mirror((Integer)state.get(ROTATION), MAX_ROTATIONS));
+        return state.with(ROTATION, mirror.mirror(state.get(ROTATION), MAX_ROTATIONS));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(ROTATION);
+        builder.add(ROTATION).add(PITCH);
     }
 }

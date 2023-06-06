@@ -1,6 +1,5 @@
 package dev.sterner.block;
 
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;

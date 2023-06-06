@@ -1,22 +1,16 @@
 package dev.sterner.blockentity;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.StringHelper;
 import net.minecraft.util.UserCache;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.UUID;
 
 import static net.minecraft.block.entity.SkullBlockEntity.loadProperties;
 
@@ -49,7 +43,7 @@ public class PeachBlockEntity extends BlockEntity {
     }
 
     public void setOwner(@Nullable GameProfile owner) {
-        synchronized(this) {
+        synchronized (this) {
             this.owner = owner;
         }
 

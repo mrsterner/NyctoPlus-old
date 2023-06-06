@@ -1,8 +1,6 @@
 package dev.sterner.block;
 
 import dev.sterner.blockentity.PeachCoreBlockEntity;
-import dev.sterner.registry.NyctoPlusBlockEntityTypes;
-import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;

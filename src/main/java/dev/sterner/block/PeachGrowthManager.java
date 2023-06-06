@@ -2,7 +2,6 @@ package dev.sterner.block;
 
 import dev.sterner.blockentity.PeachBlockEntity;
 import dev.sterner.registry.NyctoPlusObjects;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -17,7 +16,7 @@ public class PeachGrowthManager {
         return new PeachGrowthManager();
     }
 
-    public void growHead(PlayerEntity playerEntity, BlockPos pos){
+    public void growHead(PlayerEntity playerEntity, BlockPos pos) {
         World world = playerEntity.getWorld();
         BlockState state = NyctoPlusObjects.PEACH.getDefaultState();
         world.setBlockState(pos, state);
@@ -27,7 +26,7 @@ public class PeachGrowthManager {
         }
     }
 
-    public void tick(WorldAccess world, BlockPos pos, Random random){
+    public void tick(WorldAccess world, BlockPos pos, Random random) {
 
     }
 
