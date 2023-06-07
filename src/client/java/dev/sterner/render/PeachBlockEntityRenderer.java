@@ -10,6 +10,7 @@ import dev.sterner.blockentity.PeachBlockEntity;
 import dev.sterner.model.LeafModel;
 import dev.sterner.model.PeachModel;
 import dev.sterner.model.TallPeachModel;
+import dev.sterner.model.VillagerLikeHeadModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
@@ -49,21 +50,21 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
     private static final int MAX_DISTANCE = 12;
     private static final int MIN_DISTANCE = 8;
 
-    private final Map<PeachBlock.Type, SkullBlockEntityModel> MODELS;
+    private final Map<PeachBlockEntity.Type, SkullBlockEntityModel> MODELS;
 
-    private static final Map<PeachBlock.Type, Identifier> TEXTURES = Util.make(Maps.newHashMap(), (map) -> {
-        map.put(PeachBlock.Type.PIGLIN, new Identifier("textures/entity/piglin/piglin.png"));
-        map.put(PeachBlock.Type.VILLAGER, new Identifier("textures/entity/villager/villager.png"));
-        map.put(PeachBlock.Type.PILLAGER, new Identifier("textures/entity/illager/pillager.png"));
-        map.put(PeachBlock.Type.PLAYER, DefaultSkinHelper.getTexture());
+    private static final Map<PeachBlockEntity.Type, Identifier> TEXTURES = Util.make(Maps.newHashMap(), (map) -> {
+        map.put(PeachBlockEntity.Type.PIGLIN, new Identifier("textures/entity/piglin/piglin.png"));
+        map.put(PeachBlockEntity.Type.VILLAGER, new Identifier("textures/entity/villager/villager.png"));
+        map.put(PeachBlockEntity.Type.PILLAGER, new Identifier("textures/entity/illager/pillager.png"));
+        map.put(PeachBlockEntity.Type.PLAYER, DefaultSkinHelper.getTexture());
     });
 
-    public static Map<PeachBlock.Type, SkullBlockEntityModel> getModels(EntityModelLoader modelLoader) {
-        ImmutableMap.Builder<PeachBlock.Type, SkullBlockEntityModel> builder = ImmutableMap.builder();
-        builder.put(PeachBlock.Type.VILLAGER, new TallPeachModel.VillagerLikeModel(modelLoader.getModelPart(TallPeachModel.VillagerLikeModel.LAYER_LOCATION)));
-        builder.put(PeachBlock.Type.PILLAGER, new TallPeachModel.VillagerLikeModel(modelLoader.getModelPart(TallPeachModel.VillagerLikeModel.LAYER_LOCATION)));
-        builder.put(PeachBlock.Type.PIGLIN, new PiglinHeadEntityModel(modelLoader.getModelPart(EntityModelLayers.PIGLIN_HEAD)));
-        builder.put(PeachBlock.Type.PLAYER, new SkullEntityModel(modelLoader.getModelPart(EntityModelLayers.PLAYER_HEAD)));
+    public static Map<PeachBlockEntity.Type, SkullBlockEntityModel> getModels(EntityModelLoader modelLoader) {
+        ImmutableMap.Builder<PeachBlockEntity.Type, SkullBlockEntityModel> builder = ImmutableMap.builder();
+        builder.put(PeachBlockEntity.Type.VILLAGER, new VillagerLikeHeadModel(modelLoader.getModelPart(VillagerLikeHeadModel.LAYER_LOCATION)));
+        builder.put(PeachBlockEntity.Type.PILLAGER, new VillagerLikeHeadModel(modelLoader.getModelPart(VillagerLikeHeadModel.LAYER_LOCATION)));
+        builder.put(PeachBlockEntity.Type.PIGLIN, new PiglinHeadEntityModel(modelLoader.getModelPart(EntityModelLayers.PIGLIN_HEAD)));
+        builder.put(PeachBlockEntity.Type.PLAYER, new SkullEntityModel(modelLoader.getModelPart(EntityModelLayers.PLAYER_HEAD)));
         return builder.build();
     }
 
@@ -84,9 +85,9 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
         float h = RotationPropertyHelper.toDegrees(k);
         float i = RotationPropertyHelper.toDegrees(j);
 
-        PeachBlock.Type skullType = entity.getSkullType();
+        PeachBlockEntity.Type skullType = entity.getSkullType();
         if (skullType == null) {
-            skullType = PeachBlock.Type.PLAYER;
+            skullType = PeachBlockEntity.Type.PLAYER;
         }
         SkullBlockEntityModel model = this.MODELS.get(skullType);
 
@@ -134,7 +135,7 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
             vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE_PIG));
             pig.setHeadRotation(0, yaw, pitch);
             pig.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, alpha);
-        } else if (model instanceof TallPeachModel.VillagerLikeModel) {
+        } else if (model instanceof VillagerLikeHeadModel) {
             vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE_TALL));
             peachTall.setHeadRotation(0, yaw, pitch);
             peachTall.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, alpha);
@@ -147,7 +148,7 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
         matrices.pop();
     }
 
-    public static RenderLayer getRenderLayer(PeachBlock.Type type, @Nullable GameProfile profile) {
+    public static RenderLayer getRenderLayer(PeachBlockEntity.Type type, @Nullable GameProfile profile) {
         Identifier identifier = TEXTURES.get(type);
         if (profile != null) {
             MinecraftClient minecraftClient = MinecraftClient.getInstance();

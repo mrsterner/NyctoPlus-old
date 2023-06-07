@@ -3,6 +3,7 @@ package dev.sterner;
 import dev.sterner.model.LeafModel;
 import dev.sterner.model.PeachModel;
 import dev.sterner.model.TallPeachModel;
+import dev.sterner.model.VillagerLikeHeadModel;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
 import dev.sterner.render.PeachBlockEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,7 +18,7 @@ public class NyctoPlusClient implements ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(PeachModel.LAYER, PeachModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LeafModel.LAYER, LeafModel::getTexturedModelDataLeaf);
-        EntityModelLayerRegistry.registerModelLayer(TallPeachModel.VillagerLikeModel.LAYER_LOCATION, TallPeachModel.VillagerLikeModel::getSkullTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(VillagerLikeHeadModel.LAYER_LOCATION, VillagerLikeHeadModel::getSkullTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(TallPeachModel.Peach.LAYER_LOCATION, TallPeachModel.Peach::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(TallPeachModel.Pig.LAYER_LOCATION, TallPeachModel.Pig::getTexturedModelData);
     }

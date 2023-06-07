@@ -11,6 +11,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,17 +20,17 @@ import static net.minecraft.block.entity.SkullBlockEntity.loadProperties;
 public class PeachBlockEntity extends BlockEntity {
     @Nullable
     private GameProfile owner;
-    private PeachBlock.Type type;
+    private Type type;
 
     public PeachBlockEntity(BlockPos pos, BlockState state) {
         super(NyctoPlusBlockEntityTypes.PEACH_BLOCK_ENTITY, pos, state);
     }
 
-    public PeachBlock.Type getSkullType() {
+    public Type getSkullType() {
         return this.type;
     }
 
-    public void setSkullType(PeachBlock.Type type) {
+    public void setSkullType(Type type) {
         this.type = type;
         this.markDirty();
     }
@@ -57,7 +58,7 @@ public class PeachBlockEntity extends BlockEntity {
         }
         if (nbt.contains("Type", NbtElement.COMPOUND_TYPE)) {
             NbtCompound nbtCompound = nbt.getCompound("Type");
-            this.setSkullType(PeachBlock.Type.valueOf(nbtCompound.getString("Skull")));
+            this.setSkullType(Type.valueOf(nbtCompound.getString("Skull")));
         }
     }
 
@@ -100,6 +101,24 @@ public class PeachBlockEntity extends BlockEntity {
         }
         if (world instanceof ServerWorld serverWorld) {
             serverWorld.getChunkManager().markForUpdate(pos);
+        }
+    }
+
+    public enum Type implements StringIdentifiable {
+        PLAYER("piglin"),
+        VILLAGER("villager"),
+        PILLAGER("pillager"),
+        PIGLIN("piglin");
+
+        final String name;
+
+        Type(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String asString() {
+            return this == PLAYER ? PLAYER.name : this == VILLAGER ? VILLAGER.name : this == PILLAGER ? PILLAGER.name : PIGLIN.name;
         }
     }
 }
