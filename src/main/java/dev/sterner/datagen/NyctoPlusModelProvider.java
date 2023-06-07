@@ -18,14 +18,13 @@ public class NyctoPlusModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
         generator.registerSimpleCubeAll(NyctoPlusObjects.LIVING_CORE_LOG);
         registerPeachLog(generator, NyctoPlusObjects.PEACH_LOG);
+        generator.registerBuiltinWithParticle(NyctoPlusObjects.PEACH, NyctoPlusObjects.PEACH.asItem());
 
-        generator.registerBuiltin(ModelIds.getMinecraftNamespacedBlock("skull"), Blocks.SOUL_SAND)
-                .includeWithItem(Models.TEMPLATE_SKULL, NyctoPlusObjects.PEACH);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
-
+        generator.register(NyctoPlusObjects.PEACH.asItem(), Models.GENERATED);
     }
 
     private void registerPeachLog(BlockStateModelGenerator generator, Block block) {
