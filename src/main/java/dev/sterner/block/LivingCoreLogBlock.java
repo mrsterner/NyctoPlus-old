@@ -8,8 +8,10 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public class LivingCoreLogBlock extends BlockWithEntity {
@@ -38,6 +40,15 @@ public class LivingCoreLogBlock extends BlockWithEntity {
                 be.tick(world, pos, state);
             }
         };
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (world.getBlockEntity(pos) instanceof LivingCoreBlockEntity blockEntity) {
+            blockEntity.destroyTree(world);
+        }
+
+        super.onBreak(world, pos, state, player);
     }
 
     @Override

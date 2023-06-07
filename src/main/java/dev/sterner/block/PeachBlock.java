@@ -2,15 +2,20 @@ package dev.sterner.block;
 
 import com.mojang.authlib.GameProfile;
 import dev.sterner.blockentity.PeachBlockEntity;
+import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.block.entity.SkullBlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -53,7 +58,7 @@ public class PeachBlock extends BlockWithEntity {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof SkullBlockEntity skullBlockEntity) {
+        if (blockEntity instanceof PeachBlockEntity skullBlockEntity) {
             GameProfile gameProfile = null;
             if (itemStack.hasNbt()) {
                 NbtCompound nbtCompound = itemStack.getNbt();
@@ -62,15 +67,19 @@ public class PeachBlock extends BlockWithEntity {
                 } else if (nbtCompound.contains("SkullOwner", NbtElement.STRING_TYPE) && !Util.isBlank(nbtCompound.getString("SkullOwner"))) {
                     gameProfile = new GameProfile(null, nbtCompound.getString("SkullOwner"));
                 }
-            }
 
+                if (nbtCompound.contains("Type", NbtElement.COMPOUND_TYPE)) {
+                    PeachBlockEntity.Type type = PeachBlockEntity.Type.valueOf(nbtCompound.getCompound("Type").getString("Skull"));
+                    skullBlockEntity.setSkullType(type);
+                }
+            }
             skullBlockEntity.setOwner(gameProfile);
         }
     }
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isSideSolidFullSquare(world, pos, Direction.DOWN);
+        return world.getBlockState(pos.up()).isSideSolid(world, pos.up(), Direction.DOWN, SideShapeType.RIGID) || world.getBlockState(pos.up()).isIn(BlockTags.LEAVES);
     }
 
     @Override

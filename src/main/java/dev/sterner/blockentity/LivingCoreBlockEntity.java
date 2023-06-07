@@ -15,6 +15,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -161,17 +162,20 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         BlockPos pos = this.getPos();
         //Trunk base
         for (Direction dir : Direction.Type.HORIZONTAL) {
-            if (world.getBlockState(pos.offset(dir)).isReplaceable()) {
+            if (world.getBlockState(pos.offset(dir)).isReplaceable() || world.getBlockState(pos.offset(dir)).isIn(BlockTags.DIRT)) {
                 BlockState state = NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2));
                 BlockPos offsetPos = pos.offset(dir);
                 if (world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
                     world.setBlockState(offsetPos.up(), state.with(Properties.AXIS, dir.getAxis()));
+                    treeTrunkPosList.add(offsetPos.up());
                 } else {
                     state = state.with(Properties.AXIS, dir.getAxis());
                 }
                 world.setBlockState(offsetPos, state);
+                treeTrunkPosList.add(offsetPos);
                 if (world.getBlockState(offsetPos.down()).isReplaceable()) {
                     world.setBlockState(offsetPos.down(), state);
+                    treeTrunkPosList.add(offsetPos.down());
                 }
             } else {
                 world.breakBlock(pos, false);
@@ -197,6 +201,14 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
             }
         }
         treeTrunkPosList.addAll(blocksToReplace);
+    }
+
+    public void destroyTree(World world) {
+        for (BlockPos blockPos : treeTrunkPosList) {
+            if(world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH_LOG)){
+                world.breakBlock(blockPos, false);
+            }
+        }
     }
 
     @Override
