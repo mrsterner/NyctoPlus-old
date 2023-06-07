@@ -2,17 +2,15 @@ package dev.sterner.model;
 
 import dev.sterner.NyctoPlus;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.block.entity.SkullBlockEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.render.entity.model.PiglinEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class TallPeachModel {
 
-    public static class Peach extends SkullBlockEntityModel{
+    public static class Peach extends SkullBlockEntityModel {
         public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(NyctoPlus.id("peach_tall"), "main");
         private final ModelPart root;
         private final ModelPart head;
@@ -45,7 +43,7 @@ public class TallPeachModel {
         }
     }
 
-    public static class Pig extends SkullBlockEntityModel{
+    public static class Pig extends SkullBlockEntityModel {
         public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(NyctoPlus.id("peach_pig"), "main");
         private final ModelPart root;
         private final ModelPart head;

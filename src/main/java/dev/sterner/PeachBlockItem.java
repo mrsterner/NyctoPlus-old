@@ -15,7 +15,7 @@ public class PeachBlockItem extends BlockItem {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         PlayerEntity player = context.getPlayer();
-        if(player != null && player.isSneaking()){
+        if (player != null && player.isSneaking()) {
             return super.useOnBlock(context);
         }
         return ActionResult.PASS;

@@ -5,7 +5,6 @@ import dev.sterner.registry.NyctoPlusObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.util.Identifier;
 
@@ -19,12 +18,12 @@ public class NyctoPlusModelProvider extends FabricModelProvider {
         generator.registerSimpleCubeAll(NyctoPlusObjects.LIVING_CORE_LOG);
         registerPeachLog(generator, NyctoPlusObjects.PEACH_LOG);
         generator.registerBuiltinWithParticle(NyctoPlusObjects.PEACH, NyctoPlusObjects.PEACH.asItem());
-
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
         generator.register(NyctoPlusObjects.PEACH.asItem(), Models.GENERATED);
+        generator.register(NyctoPlusObjects.DEBUG_WAND, Models.GENERATED);
     }
 
     private void registerPeachLog(BlockStateModelGenerator generator, Block block) {

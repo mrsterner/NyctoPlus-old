@@ -1,9 +1,7 @@
 package dev.sterner.item;
 
-import dev.sterner.NyctoPlus;
 import dev.sterner.block.LivingCoreLogBlock;
 import dev.sterner.block.PeachBlock;
-import dev.sterner.block.PeachLogBlock;
 import dev.sterner.blockentity.PeachBlockEntity;
 import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,11 +21,11 @@ public class DebugWand extends Item {
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
         PlayerEntity player = context.getPlayer();
-        if(!world.isClient()){
-            if(world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH)){
-                if(world.getBlockEntity(blockPos) instanceof PeachBlockEntity blockEntity){
+        if (!world.isClient()) {
+            if (world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH)) {
+                if (world.getBlockEntity(blockPos) instanceof PeachBlockEntity blockEntity) {
                     PeachBlock.Type type = blockEntity.getSkullType();
-                    if(type == null){
+                    if (type == null) {
                         blockEntity.setSkullType(PeachBlock.Type.PLAYER);
                         blockEntity.markDirty();
                     }

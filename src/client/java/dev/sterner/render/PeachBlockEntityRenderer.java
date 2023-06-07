@@ -19,13 +19,19 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.SkullBlockEntityModel;
-import net.minecraft.client.render.entity.model.*;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
+import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.client.render.entity.model.PiglinHeadEntityModel;
+import net.minecraft.client.render.entity.model.SkullEntityModel;
 import net.minecraft.client.util.DefaultSkinHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.Uuids;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationPropertyHelper;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -85,7 +91,7 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
         SkullBlockEntityModel model = this.MODELS.get(skullType);
 
         RenderLayer renderLayer = getRenderLayer(skullType, entity.getOwner());
-        renderSkull(new Vec3d(entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ()),null, h, i, matrices, vertexConsumers, light, model, PEACH, PEACH_TALL, PEACH_PIG, LEAF, renderLayer);
+        renderSkull(new Vec3d(entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ()), null, h, i, matrices, vertexConsumers, light, model, PEACH, PEACH_TALL, PEACH_PIG, LEAF, renderLayer);
     }
 
     public static void renderSkull(@Nullable Vec3d vec3d, @Nullable Direction direction, float yaw, float pitch, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, SkullBlockEntityModel model, PeachModel peachModel, TallPeachModel.Peach peachTall, TallPeachModel.Pig pig, LeafModel leaf, RenderLayer renderLayer) {
@@ -124,11 +130,11 @@ public class PeachBlockEntityRenderer implements BlockEntityRenderer<PeachBlockE
         leaf.setHeadRotation(0, yaw, pitch);
         leaf.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0f);
 
-        if(model instanceof PiglinHeadEntityModel){
+        if (model instanceof PiglinHeadEntityModel) {
             vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE_PIG));
             pig.setHeadRotation(0, yaw, pitch);
             pig.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, alpha);
-        } else if(model instanceof TallPeachModel.VillagerLikeModel){
+        } else if (model instanceof TallPeachModel.VillagerLikeModel) {
             vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(TEXTURE_TALL));
             peachTall.setHeadRotation(0, yaw, pitch);
             peachTall.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, alpha);

@@ -2,8 +2,8 @@ package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
 import dev.sterner.PeachBlockItem;
-import dev.sterner.block.PeachBlock;
 import dev.sterner.block.LivingCoreLogBlock;
+import dev.sterner.block.PeachBlock;
 import dev.sterner.block.PeachLogBlock;
 import dev.sterner.item.DebugWand;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;

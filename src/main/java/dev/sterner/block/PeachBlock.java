@@ -2,7 +2,10 @@ package dev.sterner.block;
 
 import com.mojang.authlib.GameProfile;
 import dev.sterner.blockentity.PeachBlockEntity;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -68,7 +71,7 @@ public class PeachBlock extends BlockWithEntity {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw())).with(PITCH, RotationPropertyHelper.fromYaw(- ctx.getPlayer().getPitch()));
+        return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw())).with(PITCH, RotationPropertyHelper.fromYaw(-ctx.getPlayer().getPitch()));
     }
 
     @Override
@@ -94,7 +97,7 @@ public class PeachBlock extends BlockWithEntity {
 
         final String name;
 
-        Type(String name){
+        Type(String name) {
             this.name = name;
         }
 

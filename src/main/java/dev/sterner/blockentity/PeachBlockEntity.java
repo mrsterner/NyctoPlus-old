@@ -11,7 +11,6 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.UserCache;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +29,7 @@ public class PeachBlockEntity extends BlockEntity {
         return this.type;
     }
 
-    public void setSkullType(PeachBlock.Type type){
+    public void setSkullType(PeachBlock.Type type) {
         this.type = type;
         this.markDirty();
     }
@@ -56,7 +55,7 @@ public class PeachBlockEntity extends BlockEntity {
         if (nbt.contains("SkullOwner", NbtElement.COMPOUND_TYPE)) {
             this.setOwner(NbtHelper.toGameProfile(nbt.getCompound("SkullOwner")));
         }
-        if(nbt.contains("Type", NbtElement.COMPOUND_TYPE)){
+        if (nbt.contains("Type", NbtElement.COMPOUND_TYPE)) {
             NbtCompound nbtCompound = nbt.getCompound("Type");
             this.setSkullType(PeachBlock.Type.valueOf(nbtCompound.getString("Skull")));
         }

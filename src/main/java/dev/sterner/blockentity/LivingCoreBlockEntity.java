@@ -18,16 +18,16 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.BlockPositionSource;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.PositionSource;
 import net.minecraft.world.event.listener.GameEventListener;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class LivingCoreBlockEntity extends BlockEntity implements GameEventListener.Holder<LivingCoreBlockEntity.Listener> {
     private final Listener eventListener;
@@ -45,11 +45,11 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
     public void tick(World world, BlockPos pos, BlockState state) {
         eventListener.manager.tick(world, pos, world.getRandom());
 
-        if(!blocksToReplace.isEmpty()){
+        if (!blocksToReplace.isEmpty()) {
             ticker++;
-            if(ticker >= 2){
+            if (ticker >= 2) {
                 BlockPos nextPos = blocksToReplace.get(0);
-                if(world.getBlockState(nextPos).isOf(Blocks.OAK_LOG)){
+                if (world.getBlockState(nextPos).isOf(Blocks.OAK_LOG)) {
                     BlockState wood = world.getBlockState(nextPos);
                     world.breakBlock(nextPos, false);
                     world.setBlockState(nextPos, NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2)).with(Properties.AXIS, wood.get(Properties.AXIS)));
@@ -60,15 +60,15 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         }
     }
 
-    public void populateNodes(World world){
-        BlockPos origin = this.getPos().add(0,2,0);
+    public void populateNodes(World world) {
+        BlockPos origin = this.getPos().add(0, 2, 0);
         this.availableGrowthNodes.clear();
         this.collect(world, origin);
 
         leaves.addAll(leaves.stream().filter(blockPos -> world.getBlockState(blockPos.down()).isReplaceable()).toList());
 
         for (BlockPos leafPos : leaves) {
-            if(world.getRandom().nextBoolean()){
+            if (world.getRandom().nextBoolean()) {
                 availableGrowthNodes.add(leafPos.toImmutable());
             }
         }
@@ -116,17 +116,16 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         super.writeNbt(nbt);
     }
 
-    public void collect(World world, BlockPos startPos){
+    public void collect(World world, BlockPos startPos) {
 
-        Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(startPos,1 ,1 ,1);
+        Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(startPos, 1, 1, 1);
 
-        for (BlockPos nextPos: blockPosIterable) {
-            if(nextPos != startPos){
+        for (BlockPos nextPos : blockPosIterable) {
+            if (nextPos != startPos) {
                 if (world.getBlockState(nextPos).isOf(Blocks.OAK_LEAVES) && !leaves.contains(nextPos)) {
                     foundLeaves = true;
                     leaves.add(nextPos);
                     collect(world, nextPos);
-
 
 
                 } else if (world.getBlockState(nextPos).isOf(Blocks.OAK_LOG) && !foundLeaves) {
@@ -157,13 +156,13 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
             if (world.getBlockState(pos.offset(dir)).isReplaceable()) {
                 BlockState state = NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2));
                 BlockPos offsetPos = pos.offset(dir);
-                if(world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()){
+                if (world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
                     world.setBlockState(offsetPos.up(), state.with(Properties.AXIS, dir.getAxis()));
                 } else {
                     state = state.with(Properties.AXIS, dir.getAxis());
                 }
                 world.setBlockState(offsetPos, state);
-                if(world.getBlockState(offsetPos.down()).isReplaceable()){
+                if (world.getBlockState(offsetPos.down()).isReplaceable()) {
                     world.setBlockState(offsetPos.down(), state);
                 }
             } else {
@@ -178,7 +177,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
     }
 
     private void replaceOakLogs(World world, BlockPos startPos, BlockPos livingCorePos) {
-        Iterable<BlockPos> checkCube = BlockPos.iterateOutwards(startPos, 1,1,1);
+        Iterable<BlockPos> checkCube = BlockPos.iterateOutwards(startPos, 1, 1, 1);
 
         for (BlockPos nextPos : checkCube) {
             if (nextPos != startPos && !blocksToReplace.contains(nextPos) && nextPos.isWithinDistance(livingCorePos, 16)) {
@@ -229,7 +228,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                     if (entity instanceof PlayerEntity playerEntity) {
                         this.manager.growHead(playerEntity, blockEntity.getGrowPos());
                         return true;
-                    } else if (entity instanceof VillagerEntity){
+                    } else if (entity instanceof VillagerEntity) {
                         this.manager.growHead(world, blockEntity.getGrowPos(), PeachBlock.Type.VILLAGER);
                         return true;
                     }

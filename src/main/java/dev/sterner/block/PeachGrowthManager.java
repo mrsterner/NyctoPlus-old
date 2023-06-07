@@ -3,7 +3,6 @@ package dev.sterner.block;
 import dev.sterner.blockentity.PeachBlockEntity;
 import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +28,7 @@ public class PeachGrowthManager {
         }
     }
 
-    public void growHead(World world, BlockPos pos, PeachBlock.Type type){
+    public void growHead(World world, BlockPos pos, PeachBlock.Type type) {
         int pitch = world.getRandom().nextInt(25);
         int rot = world.getRandom().nextInt(360);
         BlockState state = NyctoPlusObjects.PEACH.getDefaultState().with(PeachBlock.ROTATION, rot).with(PeachBlock.PITCH, pitch);

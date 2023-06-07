@@ -14,5 +14,6 @@ public class NyctoPlusLanguageProvider extends FabricLanguageProvider {
         builder.add(NyctoPlusObjects.PEACH_LOG, "Peach Log");
         builder.add(NyctoPlusObjects.LIVING_CORE_LOG, "Living Core Log");
         builder.add(NyctoPlusObjects.PEACH, "Peach");
+        builder.add(NyctoPlusObjects.DEBUG_WAND, "Debug Wand");
     }
 }

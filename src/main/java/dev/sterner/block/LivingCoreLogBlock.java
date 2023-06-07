@@ -17,9 +17,9 @@ public class LivingCoreLogBlock extends BlockWithEntity {
         super(settings);
     }
 
-    public static void generateTree(World world, BlockPos blockPos){
+    public static void generateTree(World world, BlockPos blockPos) {
         world.setBlockState(blockPos, NyctoPlusObjects.LIVING_CORE_LOG.getDefaultState());
-        if(world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity){
+        if (world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity) {
             blockEntity.startGenerateTree();
         }
     }

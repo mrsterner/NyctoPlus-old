@@ -18,7 +18,7 @@ public class PeachItemRenderer implements BuiltinItemRendererRegistry.DynamicIte
         PeachModel peachModel = new PeachModel(MinecraftClient.getInstance().getEntityModelLoader().getModelPart(PeachModel.LAYER));
         RenderLayer renderLayer = RenderLayer.getEntityTranslucent(PeachBlockEntityRenderer.TEXTURE);
         matrices.push();
-        matrices.translate(0.5,-1.0,0.5);
+        matrices.translate(0.5, -1.0, 0.5);
         peachModel.setHeadRotation(0, 0, 0);
         peachModel.render(matrices, vertexConsumers.getBuffer(renderLayer), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.pop();

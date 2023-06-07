@@ -9,7 +9,7 @@ import net.minecraft.registry.tag.BlockTags;
 import java.util.concurrent.CompletableFuture;
 
 public class NyctoPlusTagProvider {
-    public static class NyctoPlusBlockTags extends FabricTagProvider.BlockTagProvider{
+    public static class NyctoPlusBlockTags extends FabricTagProvider.BlockTagProvider {
 
         public NyctoPlusBlockTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
