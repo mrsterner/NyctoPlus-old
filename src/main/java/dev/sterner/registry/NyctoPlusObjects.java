@@ -27,9 +27,9 @@ public interface NyctoPlusObjects {
     Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
 
     Block PEACH_LOG = register("peach_log", new PeachLogBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG).dropsNothing()), true);
-    Block LIVING_CORE_LOG = register("living_core_log", new LivingCoreLogBlock(FabricBlockSettings.copyOf(Blocks.CRIMSON_NYLIUM).dropsNothing()), true);
+    Block LIVING_CORE_LOG = register("living_core_log", new LivingCoreLogBlock(FabricBlockSettings.copyOf(Blocks.SHROOMLIGHT).dropsNothing()), true);
 
-    Block PEACH = registerPeach("peach", new PeachBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).breakInstantly().noCollision().sounds(BlockSoundGroup.FUNGUS).pistonBehavior(PistonBehavior.DESTROY)), true);
+    Block PEACH = registerPeach("peach", new PeachBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).noCollision().sounds(BlockSoundGroup.FUNGUS).pistonBehavior(PistonBehavior.DESTROY)), true);
 
     Item DEBUG_WAND = register("debug_wand", new DebugWand(new Item.Settings()));
 
