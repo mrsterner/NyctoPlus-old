@@ -1,7 +1,6 @@
 package dev.sterner.blockentity;
 
 import com.mojang.authlib.GameProfile;
-import dev.sterner.block.PeachBlock;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package dev.sterner.item;
 
 import dev.sterner.block.LivingCoreLogBlock;
-import dev.sterner.block.PeachBlock;
+import dev.sterner.blockentity.LivingCoreBlockEntity;
 import dev.sterner.blockentity.PeachBlockEntity;
 import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,22 +24,27 @@ public class DebugWand extends Item {
         if (!world.isClient()) {
             if (world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH)) {
                 if (world.getBlockEntity(blockPos) instanceof PeachBlockEntity blockEntity) {
-                    PeachBlock.Type type = blockEntity.getSkullType();
+                    PeachBlockEntity.Type type = blockEntity.getSkullType();
                     if (type == null) {
-                        blockEntity.setSkullType(PeachBlock.Type.PLAYER);
+                        blockEntity.setSkullType(PeachBlockEntity.Type.PLAYER);
                         blockEntity.markDirty();
                     }
                     if (type != null) {
                         switch (type) {
-                            case PIGLIN -> blockEntity.setSkullType(PeachBlock.Type.VILLAGER);
-                            case VILLAGER -> blockEntity.setSkullType(PeachBlock.Type.PLAYER);
-                            case PLAYER -> blockEntity.setSkullType(PeachBlock.Type.PILLAGER);
-                            case PILLAGER -> blockEntity.setSkullType(PeachBlock.Type.PIGLIN);
-                            default -> blockEntity.setSkullType(PeachBlock.Type.PLAYER);
+                            case PIGLIN -> blockEntity.setSkullType(PeachBlockEntity.Type.VILLAGER);
+                            case PLAYER -> blockEntity.setSkullType(PeachBlockEntity.Type.PILLAGER);
+                            case PILLAGER -> blockEntity.setSkullType(PeachBlockEntity.Type.PIGLIN);
+                            default -> blockEntity.setSkullType(PeachBlockEntity.Type.PLAYER);
                         }
                     }
                 }
                 return ActionResult.CONSUME;
+            } else if (world.getBlockState(blockPos).isOf(NyctoPlusObjects.LIVING_CORE_LOG)) {
+                if (world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity) {
+                    System.out.println("Leaves: " + blockEntity.leaves);
+                    System.out.println("Nodes: " + blockEntity.availableGrowthNodes);
+                    return ActionResult.CONSUME;
+                }
             } else {
                 LivingCoreLogBlock.generateTree(world, blockPos);
             }

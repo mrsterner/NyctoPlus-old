@@ -14,7 +14,6 @@ public class NyctoPlusClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockEntityRendererFactories.register(NyctoPlusBlockEntityTypes.PEACH_BLOCK_ENTITY, PeachBlockEntityRenderer::new);
-        //TODO replace with 2d model BuiltinItemRendererRegistry.INSTANCE.register(NyctoPlusObjects.PEACH.asItem(), new PeachItemRenderer());
 
         EntityModelLayerRegistry.registerModelLayer(PeachModel.LAYER, PeachModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LeafModel.LAYER, LeafModel::getTexturedModelDataLeaf);

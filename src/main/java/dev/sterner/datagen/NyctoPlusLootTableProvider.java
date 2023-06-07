@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class NyctoPlusLootTableProvider {
-    public static class Blocks extends FabricBlockLootTableProvider{
+    public static class Blocks extends FabricBlockLootTableProvider {
         public Blocks(FabricDataOutput dataOutput) {
             super(dataOutput);
         }

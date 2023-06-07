@@ -1,7 +1,6 @@
 package dev.sterner.blockentity;
 
 import com.google.common.collect.Lists;
-import dev.sterner.block.PeachBlock;
 import dev.sterner.block.PeachGrowthManager;
 import dev.sterner.block.PeachLogBlock;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
@@ -31,10 +30,10 @@ import java.util.List;
 
 public class LivingCoreBlockEntity extends BlockEntity implements GameEventListener.Holder<LivingCoreBlockEntity.Listener> {
     private final Listener eventListener;
-    private final List<BlockPos> availableGrowthNodes = Lists.newArrayList();
-    private final List<BlockPos> blocksToReplace = Lists.newArrayList();
-    private final List<BlockPos> leaves = Lists.newArrayList();
-    private boolean foundLeaves = false;
+    public final List<BlockPos> availableGrowthNodes = Lists.newArrayList();
+    public final List<BlockPos> blocksToReplace = Lists.newArrayList();
+    public final List<BlockPos> treeTrunkPosList = Lists.newArrayList();
+    public final List<BlockPos> leaves = Lists.newArrayList();
     private int ticker = 0;
 
     public LivingCoreBlockEntity(BlockPos pos, BlockState state) {
@@ -57,6 +56,9 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                 blocksToReplace.remove(nextPos);
                 ticker = 0;
             }
+            if (blocksToReplace.isEmpty()) {
+                populateNodes(world);
+            }
         }
     }
 
@@ -65,10 +67,9 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         this.availableGrowthNodes.clear();
         this.collect(world, origin);
 
-        leaves.addAll(leaves.stream().filter(blockPos -> world.getBlockState(blockPos.down()).isReplaceable()).toList());
-
         for (BlockPos leafPos : leaves) {
-            if (world.getRandom().nextBoolean()) {
+            BlockPos airPos = leafPos.toImmutable().down();
+            if (world.getRandom().nextDouble() > 0.75 && world.getBlockState(airPos).isAir()) {
                 availableGrowthNodes.add(leafPos.toImmutable());
             }
         }
@@ -85,11 +86,11 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
             }
         }
 
-        if (nbt.contains("BreakList")) {
-            NbtList list = nbt.getList("BreakList", NbtElement.COMPOUND_TYPE);
+        if (nbt.contains("TrunkList")) {
+            NbtList list = nbt.getList("TrunkList", NbtElement.COMPOUND_TYPE);
             for (int i = 0; i < list.size(); ++i) {
                 NbtCompound nbtCompound = list.getCompound(i);
-                blocksToReplace.add(NbtHelper.toBlockPos(nbtCompound));
+                treeTrunkPosList.add(NbtHelper.toBlockPos(nbtCompound));
             }
         }
     }
@@ -106,43 +107,50 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
             nbt.put("NodeList", nbtList);
         }
 
-        NbtList nbtList2 = new NbtList();
-        for (BlockPos pos : blocksToReplace) {
-            nbtList2.add(NbtHelper.fromBlockPos(pos));
+        nbtList = new NbtList();
+        for (BlockPos pos : treeTrunkPosList) {
+            nbtList.add(NbtHelper.fromBlockPos(pos));
         }
-        if (!nbtList2.isEmpty()) {
-            nbt.put("BreakList", nbtList2);
+        if (!nbtList.isEmpty()) {
+            nbt.put("TrunkList", nbtList);
         }
         super.writeNbt(nbt);
     }
 
     public void collect(World world, BlockPos startPos) {
-
-        Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(startPos, 1, 1, 1);
-
-        for (BlockPos nextPos : blockPosIterable) {
-            if (nextPos != startPos) {
-                if (world.getBlockState(nextPos).isOf(Blocks.OAK_LEAVES) && !leaves.contains(nextPos)) {
-                    foundLeaves = true;
-                    leaves.add(nextPos);
-                    collect(world, nextPos);
-
-
-                } else if (world.getBlockState(nextPos).isOf(Blocks.OAK_LOG) && !foundLeaves) {
-                    collect(world, nextPos);
+        for (BlockPos trunkPos : treeTrunkPosList) {
+            Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(trunkPos, 1, 1, 1);
+            for (BlockPos nextPos : blockPosIterable) {
+                if (nextPos != startPos && nextPos != trunkPos) {
+                    BlockPos immutablePos = nextPos.toImmutable();
+                    if (world.getBlockState(immutablePos).isOf(Blocks.OAK_LEAVES) && !leaves.contains(immutablePos)) {
+                        leaves.add(immutablePos);
+                        collectLeaves(world, immutablePos);
+                    }
                 }
             }
         }
     }
 
-    private BlockPos getGrowPos() {
+    private void collectLeaves(World world, BlockPos startPos) {
+        Iterable<BlockPos> blockPosIterable = BlockPos.iterateOutwards(startPos, 1, 1, 1);
+        for (BlockPos nextPos : blockPosIterable) {
+            if (nextPos != startPos) {
+                BlockPos immutablePos = nextPos.toImmutable();
+                if (world.getBlockState(immutablePos).isOf(Blocks.OAK_LEAVES) && !leaves.contains(immutablePos)) {
+                    leaves.add(immutablePos);
+                    collectLeaves(world, immutablePos);
+                }
+            }
+        }
+    }
+
+    public BlockPos getGrowPos() {
         if (availableGrowthNodes.isEmpty() || world == null) {
             return null;
         }
         int picked = world.getRandom().nextBetween(0, availableGrowthNodes.size());
-        BlockPos pos = availableGrowthNodes.get(picked);
-        availableGrowthNodes.remove(picked);
-        return pos;
+        return availableGrowthNodes.get(picked);
     }
 
     public void startGenerateTree() {
@@ -180,13 +188,15 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         Iterable<BlockPos> checkCube = BlockPos.iterateOutwards(startPos, 1, 1, 1);
 
         for (BlockPos nextPos : checkCube) {
-            if (nextPos != startPos && !blocksToReplace.contains(nextPos) && nextPos.isWithinDistance(livingCorePos, 16)) {
-                if (world.getBlockState(nextPos).isOf(Blocks.OAK_LOG)) {
-                    blocksToReplace.add(nextPos.toImmutable());
-                    replaceOakLogs(world, nextPos, livingCorePos);
+            BlockPos immutablePos = nextPos.toImmutable();
+            if (immutablePos != startPos && !blocksToReplace.contains(immutablePos) && immutablePos.isWithinDistance(livingCorePos, 16)) {
+                if (world.getBlockState(immutablePos).isOf(Blocks.OAK_LOG)) {
+                    blocksToReplace.add(immutablePos);
+                    replaceOakLogs(world, immutablePos, livingCorePos);
                 }
             }
         }
+        treeTrunkPosList.addAll(blocksToReplace);
     }
 
     @Override
@@ -226,10 +236,10 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                 Entity entity = emitter.sourceEntity();
                 if (blockEntity.getGrowPos() != null) {
                     if (entity instanceof PlayerEntity playerEntity) {
-                        this.manager.growHead(playerEntity, blockEntity.getGrowPos());
+                        this.manager.growHead(playerEntity, blockEntity);
                         return true;
                     } else if (entity instanceof VillagerEntity) {
-                        this.manager.growHead(world, blockEntity.getGrowPos(), PeachBlock.Type.VILLAGER);
+                        this.manager.growHead(world, blockEntity, PeachBlockEntity.Type.VILLAGER);
                         return true;
                     }
                 }
