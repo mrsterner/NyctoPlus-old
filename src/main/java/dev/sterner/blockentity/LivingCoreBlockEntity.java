@@ -53,6 +53,9 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                     BlockState wood = world.getBlockState(nextPos);
                     world.breakBlock(nextPos, false);
                     world.setBlockState(nextPos, NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2)).with(Properties.AXIS, wood.get(Properties.AXIS)));
+                } else if (world.getBlockState(nextPos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockEntity(nextPos) instanceof ShimenawaBlockEntity blockEntity){
+                    System.out.println("SetPeach");
+                    blockEntity.setLogState(NyctoPlusObjects.PEACH_LOG.getDefaultState());
                 }
                 blocksToReplace.remove(nextPos);
                 ticker = 0;
@@ -162,10 +165,10 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         BlockPos pos = this.getPos();
         //Trunk base
         for (Direction dir : Direction.Type.HORIZONTAL) {
-            if (world.getBlockState(pos.offset(dir)).isReplaceable() || world.getBlockState(pos.offset(dir)).isIn(BlockTags.DIRT)) {
+            if (!world.getBlockState(pos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockState(pos.offset(dir)).isReplaceable() || world.getBlockState(pos.offset(dir)).isIn(BlockTags.DIRT)) {
                 BlockState state = NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2));
                 BlockPos offsetPos = pos.offset(dir);
-                if (world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
+                if (!world.getBlockState(offsetPos.up()).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
                     world.setBlockState(offsetPos.up(), state.with(Properties.AXIS, dir.getAxis()));
                     treeTrunkPosList.add(offsetPos.up());
                 } else {
@@ -194,7 +197,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
         for (BlockPos nextPos : checkCube) {
             BlockPos immutablePos = nextPos.toImmutable();
             if (immutablePos != startPos && !blocksToReplace.contains(immutablePos) && immutablePos.isWithinDistance(livingCorePos, 16)) {
-                if (world.getBlockState(immutablePos).isOf(Blocks.OAK_LOG)) {
+                if (world.getBlockState(immutablePos).isOf(Blocks.OAK_LOG) || world.getBlockState(immutablePos).isOf(NyctoPlusObjects.SHIMENAWA)) {
                     blocksToReplace.add(immutablePos);
                     replaceOakLogs(world, immutablePos, livingCorePos);
                 }
@@ -205,7 +208,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
 
     public void destroyTree(World world) {
         for (BlockPos blockPos : treeTrunkPosList) {
-            if(world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH_LOG)){
+            if(world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH_LOG) || world.getBlockState(blockPos).isOf(NyctoPlusObjects.SHIMENAWA)){
                 world.breakBlock(blockPos, false);
             }
         }
