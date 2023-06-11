@@ -7,6 +7,7 @@ import dev.sterner.block.LivingCoreLogBlock;
 import dev.sterner.block.PeachBlock;
 import dev.sterner.block.PeachLogBlock;
 import dev.sterner.item.DebugWand;
+import dev.sterner.item.ShimenawaItem;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -31,9 +32,7 @@ public interface NyctoPlusObjects {
     Block LIVING_CORE_LOG = register("living_core_log", new LivingCoreLogBlock(FabricBlockSettings.copyOf(Blocks.SHROOMLIGHT).dropsNothing()), true);
 
     Block PEACH = registerPeach("peach", new PeachBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).noCollision().sounds(BlockSoundGroup.FUNGUS).pistonBehavior(PistonBehavior.DESTROY)), true);
-    Block SHIMENAWA = register("shimenawa", new ShimenawaBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).noCollision().sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.BLOCK)), true);
-
-
+    Block SHIMENAWA = registerShimenawa("shimenawa", new ShimenawaBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).noCollision().sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.BLOCK)));
 
     Item DEBUG_WAND = register("debug_wand", new DebugWand(new Item.Settings()));
 
@@ -58,6 +57,9 @@ public interface NyctoPlusObjects {
         return register(name, block, new PeachBlockItem(block, new Item.Settings()), createItem);
     }
 
+    static <T extends Block> T registerShimenawa(String name, T block) {
+        return register(name, block, new ShimenawaItem(block, new Item.Settings()), true);
+    }
 
     static void init() {
         BLOCKS.keySet().forEach(block -> Registry.register(Registries.BLOCK, BLOCKS.get(block), block));

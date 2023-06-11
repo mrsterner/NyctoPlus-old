@@ -24,6 +24,7 @@ public class NyctoPlusModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator generator) {
         generator.register(NyctoPlusObjects.PEACH.asItem(), Models.GENERATED);
         generator.register(NyctoPlusObjects.DEBUG_WAND, Models.GENERATED);
+        generator.register(NyctoPlusObjects.SHIMENAWA.asItem(), Models.GENERATED);
     }
 
     private void registerPeachLog(BlockStateModelGenerator generator, Block block) {

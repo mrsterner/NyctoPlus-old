@@ -5,6 +5,7 @@ import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -20,9 +21,11 @@ public class LivingCoreLogBlock extends BlockWithEntity {
     }
 
     public static void generateTree(World world, BlockPos blockPos) {
-        world.setBlockState(blockPos, NyctoPlusObjects.LIVING_CORE_LOG.getDefaultState());
-        if (world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity) {
-            blockEntity.startGenerateTree();
+        if(world.getBlockState(blockPos).isOf(Blocks.OAK_LOG)){
+            world.setBlockState(blockPos, NyctoPlusObjects.LIVING_CORE_LOG.getDefaultState());
+            if (world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity) {
+                blockEntity.startGenerateTree();
+            }
         }
     }
 

@@ -35,6 +35,9 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
         this.eventListener = new Listener(new BlockPositionSource(pos), this);
     }
 
+    public void onUse(World world, BlockPos pos, PlayerEntity player) {
+    }
+
     public BlockState getLogState() {
         return logState;
     }
@@ -104,9 +107,6 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
     @Override
     public Listener getEventListener() {
         return eventListener;
-    }
-
-    public void onUse(World world, BlockPos pos, PlayerEntity player) {
     }
 
     public static class Listener implements GameEventListener {
