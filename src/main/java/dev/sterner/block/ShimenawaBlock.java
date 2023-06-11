@@ -31,7 +31,7 @@ public class ShimenawaBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.getBlockEntity(pos) instanceof ShimenawaBlockEntity blockEntity) {
-            System.out.println(blockEntity.getLogState());
+            blockEntity.onUse(world, pos, player);
         }
 
         return super.onUse(state, world, pos, player, hand, hit);

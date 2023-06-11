@@ -43,10 +43,10 @@ public class NyctoPlusLootTableProvider {
         }
     }
 
-    public static class EntityTypes extends SimpleFabricLootTableProvider {
+    public static class NyctoEntityTypes extends SimpleFabricLootTableProvider {
         private final Map<Identifier, LootTable.Builder> loot = Maps.newHashMap();
 
-        public EntityTypes(FabricDataOutput output) {
+        public NyctoEntityTypes(FabricDataOutput output) {
             super(output, LootContextTypes.ENTITY);
         }
 

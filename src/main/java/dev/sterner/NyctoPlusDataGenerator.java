@@ -15,6 +15,7 @@ public class NyctoPlusDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(NyctoPlusModelProvider::new);
         pack.addProvider(NyctoPlusTagProvider.NyctoPlusBlockTags::new);
         pack.addProvider(NyctoPlusLootTableProvider.Blocks::new);
-        pack.addProvider(NyctoPlusLootTableProvider.EntityTypes::new);
+        pack.addProvider(NyctoPlusLootTableProvider.NyctoEntityTypes::new);
+        pack.addProvider(NyctoPlusTagProvider.NyctoPlusEntityTypeTags::new);
     }
 }

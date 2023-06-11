@@ -168,7 +168,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
             if (!world.getBlockState(pos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockState(pos.offset(dir)).isReplaceable() || world.getBlockState(pos.offset(dir)).isIn(BlockTags.DIRT)) {
                 BlockState state = NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2));
                 BlockPos offsetPos = pos.offset(dir);
-                if (!world.getBlockState(offsetPos.up()).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
+                if (!world.getBlockState(pos.up()).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockState(offsetPos.up()).isReplaceable() && world.getRandom().nextBoolean()) {
                     world.setBlockState(offsetPos.up(), state.with(Properties.AXIS, dir.getAxis()));
                     treeTrunkPosList.add(offsetPos.up());
                 } else {
