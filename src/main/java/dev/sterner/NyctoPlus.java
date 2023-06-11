@@ -13,6 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class NyctoPlus implements ModInitializer {
                 .icon(() -> new ItemStack(NyctoPlusObjects.PEACH))
                 .displayName(Text.translatable(MODID + ".group.main"))
                 .build());
+
         ItemGroupEvents.modifyEntriesEvent(NYCTOPLUS_ITEM_GROUP).register(this::mainGroup);
     }
 

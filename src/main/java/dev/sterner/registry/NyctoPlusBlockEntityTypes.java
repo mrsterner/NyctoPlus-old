@@ -3,6 +3,7 @@ package dev.sterner.registry;
 import dev.sterner.NyctoPlus;
 import dev.sterner.blockentity.LivingCoreBlockEntity;
 import dev.sterner.blockentity.PeachBlockEntity;
+import dev.sterner.blockentity.ShimenawaBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -21,6 +22,11 @@ public interface NyctoPlusBlockEntityTypes {
 
     BlockEntityType<PeachBlockEntity> PEACH_BLOCK_ENTITY = register("peach", FabricBlockEntityTypeBuilder
             .create(PeachBlockEntity::new, NyctoPlusObjects.PEACH).build(null));
+
+    BlockEntityType<ShimenawaBlockEntity> SHIMENAWA = register("shimenawa", FabricBlockEntityTypeBuilder
+            .create(ShimenawaBlockEntity::new, NyctoPlusObjects.SHIMENAWA).build(null));
+
+
 
     static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
         BLOCK_ENTITY_TYPES.put(type, NyctoPlus.id(name));

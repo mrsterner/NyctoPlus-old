@@ -1,6 +1,7 @@
 package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
+import dev.sterner.block.ShimenawaBlock;
 import dev.sterner.item.PeachBlockItem;
 import dev.sterner.block.LivingCoreLogBlock;
 import dev.sterner.block.PeachBlock;
@@ -30,6 +31,9 @@ public interface NyctoPlusObjects {
     Block LIVING_CORE_LOG = register("living_core_log", new LivingCoreLogBlock(FabricBlockSettings.copyOf(Blocks.SHROOMLIGHT).dropsNothing()), true);
 
     Block PEACH = registerPeach("peach", new PeachBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).noCollision().sounds(BlockSoundGroup.FUNGUS).pistonBehavior(PistonBehavior.DESTROY)), true);
+    Block SHIMENAWA = register("shimenawa", new ShimenawaBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).noCollision().sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.BLOCK)), true);
+
+
 
     Item DEBUG_WAND = register("debug_wand", new DebugWand(new Item.Settings()));
 
