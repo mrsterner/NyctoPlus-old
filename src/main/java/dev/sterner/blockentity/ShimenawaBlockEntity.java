@@ -1,7 +1,9 @@
 package dev.sterner.blockentity;
 
+import dev.sterner.block.LivingCoreLogBlock;
 import dev.sterner.block.PeachGrowthManager;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
+import dev.sterner.registry.NyctoPlusObjects;
 import dev.sterner.registry.NyctoPlusTagKeys;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,7 +16,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -26,16 +30,46 @@ import net.minecraft.world.event.PositionSource;
 import net.minecraft.world.event.listener.GameEventListener;
 
 public class ShimenawaBlockEntity extends BlockEntity implements GameEventListener.Holder<ShimenawaBlockEntity.Listener> {
-    private BlockState logState = Blocks.OAK_LOG.getDefaultState();
+    private BlockState logState;
     private final Listener eventListener;
     private int deathCount = 0;
+    private boolean bl = true;
 
     public ShimenawaBlockEntity(BlockPos pos, BlockState state) {
         super(NyctoPlusBlockEntityTypes.SHIMENAWA, pos, state);
         this.eventListener = new Listener(new BlockPositionSource(pos), this);
+        this.logState = Blocks.OAK_LOG.getDefaultState();
     }
 
     public void onUse(World world, BlockPos pos, PlayerEntity player) {
+    }
+
+    public void tick(World world, BlockPos pos, BlockState state) {
+        if (!world.isClient()) {
+            if (bl && deathCount >= 6 && logState.isOf(Blocks.OAK_LOG) && world.getBlockState(pos.down()).isOf(Blocks.OAK_LOG)) {
+                bl = false;
+                BlockPos startGrowPos = getBottomLog(world, pos);
+                LivingCoreLogBlock.generateTree(world, startGrowPos);
+                markDirty();
+            }
+        }
+
+    }
+
+    private BlockPos getBottomLog(World world, BlockPos startPos) {
+        if (world.getBlockState(startPos).isOf(Blocks.OAK_LOG) || world.getBlockState(startPos).isOf(NyctoPlusObjects.SHIMENAWA)) {
+            int height = startPos.getY() - 1;
+            while (height > world.getBottomY()) {
+                BlockPos logPos = new BlockPos(startPos.getX(), height, startPos.getZ());
+                if (world.getBlockState(logPos).isOf(Blocks.OAK_LOG)) {
+                    height--;
+                } else {
+                    return logPos.up();
+                }
+            }
+            return startPos.down();
+        }
+        return startPos;
     }
 
     public BlockState getLogState() {
@@ -60,18 +94,15 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if (this.world != null) {
-            NbtCompound logNbt = nbt.getCompound("Log");
-            setLogState(NbtHelper.toBlockState(this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK), logNbt));
-        }
+        RegistryEntryLookup<Block> registryEntryLookup = this.world != null ? this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK) : Registries.BLOCK.getReadOnlyWrapper();
+        setLogState(NbtHelper.toBlockState(registryEntryLookup, nbt.getCompound("Log")));
         setDeathCount(nbt.getInt("DeathCount"));
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        NbtCompound logNbt = NbtHelper.fromBlockState(getLogState());
-        nbt.put("Log", logNbt);
+        nbt.put("Log", NbtHelper.fromBlockState(getLogState()));
         nbt.putInt("DeathCount", getDeathCount());
     }
 

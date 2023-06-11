@@ -1,11 +1,14 @@
 package dev.sterner.block;
 
+import dev.sterner.blockentity.LivingCoreBlockEntity;
 import dev.sterner.blockentity.ShimenawaBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.SuspiciousStewItem;
@@ -35,6 +38,15 @@ public class ShimenawaBlock extends BlockWithEntity {
         }
 
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return (tickerWorld, pos, tickerState, blockEntity) -> {
+            if (blockEntity instanceof ShimenawaBlockEntity be) {
+                be.tick(world, pos, state);
+            }
+        };
     }
 
     @Nullable
