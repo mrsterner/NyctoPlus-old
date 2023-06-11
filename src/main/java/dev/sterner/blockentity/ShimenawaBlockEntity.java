@@ -1,7 +1,6 @@
 package dev.sterner.blockentity;
 
 import dev.sterner.block.LivingCoreLogBlock;
-import dev.sterner.block.PeachGrowthManager;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
 import dev.sterner.registry.NyctoPlusObjects;
 import dev.sterner.registry.NyctoPlusTagKeys;
@@ -11,12 +10,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
@@ -46,14 +44,13 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
 
     public void tick(World world, BlockPos pos, BlockState state) {
         if (!world.isClient()) {
-            if (bl && deathCount >= 6 && logState.isOf(Blocks.OAK_LOG) && world.getBlockState(pos.down()).isOf(Blocks.OAK_LOG)) {
+            if (bl && deathCount >= 10 && logState.isOf(Blocks.OAK_LOG) && world.getBlockState(pos.down()).isOf(Blocks.OAK_LOG)) {
                 bl = false;
                 BlockPos startGrowPos = getBottomLog(world, pos);
                 LivingCoreLogBlock.generateTree(world, startGrowPos);
                 markDirty();
             }
         }
-
     }
 
     private BlockPos getBottomLog(World world, BlockPos startPos) {
@@ -76,7 +73,7 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
         return logState;
     }
 
-    public void setLogState(BlockState state){
+    public void setLogState(BlockState state) {
         this.logState = state;
         markDirty();
     }
@@ -118,7 +115,7 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
         }
     }
 
-    public int getDeathCount(){
+    public int getDeathCount() {
         return deathCount;
     }
 
@@ -126,11 +123,14 @@ public class ShimenawaBlockEntity extends BlockEntity implements GameEventListen
         if (livingEntity.getType().isIn(NyctoPlusTagKeys.HUMANOIDS)) {
             setDeathCount(getDeathCount() + 5);
         } else {
+            if (livingEntity instanceof HostileEntity) {
+                return;
+            }
             setDeathCount(getDeathCount() + 1);
         }
     }
 
-    public void setDeathCount(int deathCount){
+    public void setDeathCount(int deathCount) {
         this.deathCount = deathCount;
         markDirty();
     }

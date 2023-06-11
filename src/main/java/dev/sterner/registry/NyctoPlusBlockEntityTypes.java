@@ -27,7 +27,6 @@ public interface NyctoPlusBlockEntityTypes {
             .create(ShimenawaBlockEntity::new, NyctoPlusObjects.SHIMENAWA).build(null));
 
 
-
     static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
         BLOCK_ENTITY_TYPES.put(type, NyctoPlus.id(name));
         return type;

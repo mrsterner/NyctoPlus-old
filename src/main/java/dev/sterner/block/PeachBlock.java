@@ -2,14 +2,9 @@ package dev.sterner.block;
 
 import com.mojang.authlib.GameProfile;
 import dev.sterner.blockentity.PeachBlockEntity;
-import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.block.entity.SkullBlockEntity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;

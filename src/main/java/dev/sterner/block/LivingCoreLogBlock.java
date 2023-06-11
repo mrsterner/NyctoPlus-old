@@ -10,10 +10,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public class LivingCoreLogBlock extends BlockWithEntity {
@@ -22,7 +20,7 @@ public class LivingCoreLogBlock extends BlockWithEntity {
     }
 
     public static void generateTree(World world, BlockPos blockPos) {
-        if(world.getBlockState(blockPos).isOf(Blocks.OAK_LOG)){
+        if (world.getBlockState(blockPos).isOf(Blocks.OAK_LOG)) {
             world.setBlockState(blockPos, NyctoPlusObjects.LIVING_CORE_LOG.getDefaultState());
             if (world.getBlockEntity(blockPos) instanceof LivingCoreBlockEntity blockEntity) {
                 blockEntity.startGenerateTree();

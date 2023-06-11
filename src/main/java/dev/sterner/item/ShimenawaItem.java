@@ -6,7 +6,6 @@ import dev.sterner.registry.NyctoPlusObjects;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
@@ -27,8 +26,8 @@ public class ShimenawaItem extends BlockItem {
         BlockPos pos = ctx.getBlockPos();
         World world = ctx.getWorld();
         BlockState state = world.getBlockState(pos);
-        if(state.isIn(BlockTags.LOGS)){
-            if(state.contains(Properties.AXIS)){
+        if (state.isIn(BlockTags.LOGS)) {
+            if (state.contains(Properties.AXIS)) {
                 Direction.Axis axis = state.get(Properties.AXIS);
                 if (axis == Direction.Axis.Y) {
                     world.setBlockState(pos, NyctoPlusObjects.SHIMENAWA.getDefaultState().with(ShimenawaBlock.ROTATION, ctx.getHorizontalPlayerFacing().getOpposite()));

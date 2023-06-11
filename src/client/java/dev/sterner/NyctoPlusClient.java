@@ -2,14 +2,10 @@ package dev.sterner;
 
 import dev.sterner.model.*;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
-import dev.sterner.registry.NyctoPlusObjects;
 import dev.sterner.render.PeachBlockEntityRenderer;
 import dev.sterner.render.ShimenawaBlockEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
 public class NyctoPlusClient implements ClientModInitializer {

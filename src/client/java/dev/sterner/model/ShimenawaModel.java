@@ -17,6 +17,7 @@ public class ShimenawaModel extends Model {
         this.base = root.getChild("base");
 
     }
+
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();

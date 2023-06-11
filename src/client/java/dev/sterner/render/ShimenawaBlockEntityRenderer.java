@@ -6,7 +6,9 @@ import dev.sterner.blockentity.ShimenawaBlockEntity;
 import dev.sterner.model.ShimenawaModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -29,7 +31,7 @@ public class ShimenawaBlockEntityRenderer implements BlockEntityRenderer<Shimena
 
         matrices.push();
         matrices.translate(0.5F, 0.5F, 0.5F);
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(- direction.asRotation()));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-direction.asRotation()));
         matrices.translate(-0.5F, -0.5F, -0.5F);
 
         switch (direction) {
@@ -37,7 +39,7 @@ public class ShimenawaBlockEntityRenderer implements BlockEntityRenderer<Shimena
             case WEST, EAST -> {
                 matrices.push();
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
-                matrices.translate(-1,0,0);
+                matrices.translate(-1, 0, 0);
                 renderBlock(entity, matrices, vertexConsumers);
                 matrices.pop();
             }
@@ -46,12 +48,12 @@ public class ShimenawaBlockEntityRenderer implements BlockEntityRenderer<Shimena
         matrices.translate(0.5F, 1.5F, 0.5F);
         matrices.scale(-1.0F, -1.0F, 1.0F);
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
-        MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE)), light, overlay, 1,1,1,1);
+        MODEL.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE)), light, overlay, 1, 1, 1, 1);
         matrices.pop();
     }
 
-    private void renderBlock(ShimenawaBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider){
-        if(entity.getWorld() != null){
+    private void renderBlock(ShimenawaBlockEntity entity, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider) {
+        if (entity.getWorld() != null) {
             MinecraftClient.getInstance().getBlockRenderManager()
                     .renderBlock(
                             entity.getLogState(),

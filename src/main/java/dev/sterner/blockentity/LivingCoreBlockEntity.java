@@ -53,7 +53,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                     BlockState wood = world.getBlockState(nextPos);
                     world.breakBlock(nextPos, false);
                     world.setBlockState(nextPos, NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2)).with(Properties.AXIS, wood.get(Properties.AXIS)));
-                } else if (world.getBlockState(nextPos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockEntity(nextPos) instanceof ShimenawaBlockEntity blockEntity){
+                } else if (world.getBlockState(nextPos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockEntity(nextPos) instanceof ShimenawaBlockEntity blockEntity) {
                     System.out.println("SetPeach");
                     blockEntity.setLogState(NyctoPlusObjects.PEACH_LOG.getDefaultState());
                 }
@@ -208,7 +208,7 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
 
     public void destroyTree(World world) {
         for (BlockPos blockPos : treeTrunkPosList) {
-            if(world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH_LOG) || world.getBlockState(blockPos).isOf(NyctoPlusObjects.SHIMENAWA)){
+            if (world.getBlockState(blockPos).isOf(NyctoPlusObjects.PEACH_LOG) || world.getBlockState(blockPos).isOf(NyctoPlusObjects.SHIMENAWA)) {
                 world.breakBlock(blockPos, false);
             }
         }
