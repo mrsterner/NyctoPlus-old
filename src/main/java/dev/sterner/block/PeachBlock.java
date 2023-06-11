@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 public class PeachBlock extends BlockWithEntity {
     public static final int MAX_ROTATION_INDEX = RotationPropertyHelper.getMax();
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;
-    public static final IntProperty ROTATION = Properties.ROTATION;
+    public static final IntProperty ROTATION = IntProperty.of("rotation", 0, RotationPropertyHelper.getMax());
     public static final IntProperty PITCH = IntProperty.of("pitch", 0, RotationPropertyHelper.getMax());
 
     public PeachBlock(Settings settings) {

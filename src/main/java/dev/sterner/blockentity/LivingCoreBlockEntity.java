@@ -54,7 +54,6 @@ public class LivingCoreBlockEntity extends BlockEntity implements GameEventListe
                     world.breakBlock(nextPos, false);
                     world.setBlockState(nextPos, NyctoPlusObjects.PEACH_LOG.getDefaultState().with(PeachLogBlock.VARIANTS, world.getRandom().nextInt(2)).with(Properties.AXIS, wood.get(Properties.AXIS)));
                 } else if (world.getBlockState(nextPos).isOf(NyctoPlusObjects.SHIMENAWA) && world.getBlockEntity(nextPos) instanceof ShimenawaBlockEntity blockEntity) {
-                    System.out.println("SetPeach");
                     blockEntity.setLogState(NyctoPlusObjects.PEACH_LOG.getDefaultState());
                 }
                 blocksToReplace.remove(nextPos);
