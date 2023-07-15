@@ -1,9 +1,9 @@
 package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
-import dev.sterner.blockentity.LivingCoreBlockEntity;
-import dev.sterner.blockentity.PeachBlockEntity;
-import dev.sterner.blockentity.ShimenawaBlockEntity;
+import dev.sterner.common.blockentity.LivingCoreBlockEntity;
+import dev.sterner.common.blockentity.PeachBlockEntity;
+import dev.sterner.common.blockentity.ShimenawaBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;

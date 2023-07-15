@@ -24,11 +24,7 @@
     ]
   },
   "mixins": [
-    "nyctoplus.mixins.json",
-    {
-      "config": "nyctoplus.client.mixins.json",
-      "environment": "client"
-    }
+    "nyctoplus.mixins.json"
   ],
   "accessWidener": "nyctoplus.accesswidener",
   "depends": {

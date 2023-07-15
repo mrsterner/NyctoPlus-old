@@ -1,6 +1,6 @@
 package dev.sterner.datagen;
 
-import dev.sterner.block.PeachLogBlock;
+import dev.sterner.common.block.PeachLogBlock;
 import dev.sterner.registry.NyctoPlusObjects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;

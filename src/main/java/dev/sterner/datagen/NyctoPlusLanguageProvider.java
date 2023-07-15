@@ -16,5 +16,6 @@ public class NyctoPlusLanguageProvider extends FabricLanguageProvider {
         builder.add(NyctoPlusObjects.PEACH, "Peach");
         builder.add(NyctoPlusObjects.DEBUG_WAND, "Debug Wand");
         builder.add(NyctoPlusObjects.SHIMENAWA, "Shimenawa");
+        builder.add(NyctoPlusObjects.STONE_MASK, "Stone Mask");
     }
 }

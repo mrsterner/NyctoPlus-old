@@ -1,13 +1,14 @@
 package dev.sterner.registry;
 
 import dev.sterner.NyctoPlus;
-import dev.sterner.block.LivingCoreLogBlock;
-import dev.sterner.block.PeachBlock;
-import dev.sterner.block.PeachLogBlock;
-import dev.sterner.block.ShimenawaBlock;
-import dev.sterner.item.DebugWand;
-import dev.sterner.item.PeachBlockItem;
-import dev.sterner.item.ShimenawaItem;
+import dev.sterner.common.block.LivingCoreLogBlock;
+import dev.sterner.common.block.PeachBlock;
+import dev.sterner.common.block.PeachLogBlock;
+import dev.sterner.common.block.ShimenawaBlock;
+import dev.sterner.common.item.DebugWand;
+import dev.sterner.common.item.PeachBlockItem;
+import dev.sterner.common.item.ShimenawaItem;
+import dev.sterner.common.item.StoneMaskItem;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -33,6 +34,8 @@ public interface NyctoPlusObjects {
 
     Block PEACH = registerPeach("peach", new PeachBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).noCollision().sounds(BlockSoundGroup.FUNGUS).pistonBehavior(PistonBehavior.DESTROY)), true);
     Block SHIMENAWA = registerShimenawa("shimenawa", new ShimenawaBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).noCollision().sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.BLOCK)));
+
+    Item STONE_MASK = register("stone_mask", new StoneMaskItem(new Item.Settings()));
 
     Item DEBUG_WAND = register("debug_wand", new DebugWand(new Item.Settings()));
 

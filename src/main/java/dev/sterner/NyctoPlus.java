@@ -42,8 +42,7 @@ public class NyctoPlus implements ModInitializer {
     }
 
     private void mainGroup(FabricItemGroupEntries entries) {
-
-
+        entries.add(NyctoPlusObjects.STONE_MASK);
         entries.add(NyctoPlusObjects.PEACH);
         entries.add(NyctoPlusObjects.PEACH_LOG);
         entries.add(NyctoPlusObjects.LIVING_CORE_LOG);
