@@ -10,9 +10,4 @@ public class StoneMaskArmorRenderer extends GeoArmorRenderer<StoneMaskItem> {
     public StoneMaskArmorRenderer() {
         super(new DefaultedItemGeoModel<>(NyctoPlus.id("armor/stone_mask")));
     }
-
-    @Override
-    public ItemStack getCurrentStack() {
-        return super.getCurrentStack();
-    }
 }

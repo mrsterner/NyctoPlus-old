@@ -1,5 +1,7 @@
 package dev.sterner;
 
+import dev.sterner.common.event.TickEquipmentEvent;
+import dev.sterner.common.item.StoneMaskItem;
 import dev.sterner.registry.NyctoPlusBlockEntityTypes;
 import dev.sterner.registry.NyctoPlusEntityTypes;
 import dev.sterner.registry.NyctoPlusObjects;
@@ -39,6 +41,7 @@ public class NyctoPlus implements ModInitializer {
                 .build());
 
         ItemGroupEvents.modifyEntriesEvent(NYCTOPLUS_ITEM_GROUP).register(this::mainGroup);
+        TickEquipmentEvent.EVENT.register(StoneMaskItem::tick);
     }
 
     private void mainGroup(FabricItemGroupEntries entries) {
@@ -47,5 +50,4 @@ public class NyctoPlus implements ModInitializer {
         entries.add(NyctoPlusObjects.PEACH_LOG);
         entries.add(NyctoPlusObjects.LIVING_CORE_LOG);
     }
-
 }
