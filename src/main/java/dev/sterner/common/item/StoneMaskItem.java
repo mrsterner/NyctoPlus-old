@@ -18,6 +18,7 @@ import mod.azure.azurelib.renderer.GeoItemRenderer;
 import mod.azure.azurelib.util.AzureLibUtil;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -35,17 +36,27 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = AzureLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
-    private static final String NBT = "StoneMaskNbt";
-    private static final String IDLE = "Idle";
-    private static final String AWAKENING = "Awakening";
-    private static final String PIERCED = "Pierced";
-    private static final String RETRACT = "Retract";
+    public static final String NBT = "StoneMaskNbt";
+    public static final String IDLE = "Idle";
+    public static final String AWAKENING = "Awakening";
+    public static final String PIERCED = "Pierced";
+    public static final String RETRACT = "Retract";
 
     private int timer = 0;
 
     public StoneMaskItem(Settings settings) {
         super(ArmorMaterials.LEATHER, Type.HELMET, settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
+    }
+
+    public static void tick(World world, LivingEntity livingEntity, Set<ItemStack> equipment) {
+        if (!world.isClient()) {
+            Iterator<ItemStack> itemStackIterator = equipment.iterator();
+            ItemStack head = itemStackIterator.next();
+            if (head.getItem() instanceof StoneMaskItem stoneMaskItem) {
+                stoneMaskItem.tickEquippedStoneMask(world, livingEntity, head);
+            }
+        }
     }
 
     private void tickEquippedStoneMask(World world, LivingEntity livingEntity, ItemStack itemStack) {
@@ -58,6 +69,7 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
             if (nbt.contains(NBT)) {
                 String state = nbt.getString(NBT);
                 switch (state) {
+                    //TODO
                     case AWAKENING -> {}
                     case PIERCED -> {}
                     case RETRACT -> {}
@@ -65,6 +77,17 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
                 }
             }
         }
+    }
+
+    public boolean activateStoneMask(LivingEntity livingEntity, ItemStack itemStack){
+        if (itemStack.getNbt() != null) {
+            NbtCompound nbtCompound = itemStack.getNbt();
+            if (nbtCompound.contains(NBT) && nbtCompound.getString(NBT).equals(IDLE)) {
+                nbtCompound.putString(NBT, AWAKENING);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -138,15 +161,5 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    public static void tick(World world, LivingEntity livingEntity, Set<ItemStack> equipment) {
-        if (!world.isClient()) {
-            Iterator<ItemStack> itemStackIterator = equipment.iterator();
-            ItemStack head = itemStackIterator.next();
-            if (head.getItem() instanceof StoneMaskItem stoneMaskItem) {
-                stoneMaskItem.tickEquippedStoneMask(world, livingEntity, head);
-            }
-        }
     }
 }
