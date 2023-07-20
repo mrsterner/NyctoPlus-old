@@ -42,13 +42,17 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
     public static final String PIERCED = "Pierced";
     public static final String RETRACT = "Retract";
 
-    private int timer = 0;
-
     public StoneMaskItem(Settings settings) {
         super(ArmorMaterials.LEATHER, Type.HELMET, settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
+    /**
+     * Triggered from TickEquipmentEvent
+     * @param world world
+     * @param livingEntity user with the equipment
+     * @param equipment set of ItemStacks, the livingEntity's equipment
+     */
     public static void tick(World world, LivingEntity livingEntity, Set<ItemStack> equipment) {
         if (!world.isClient()) {
             Iterator<ItemStack> itemStackIterator = equipment.iterator();
@@ -59,6 +63,12 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
         }
     }
 
+    /**
+     * ticks the equipped stone mask depending on its state
+     * @param world world
+     * @param livingEntity entity wearing the mask
+     * @param itemStack the mask
+     */
     private void tickEquippedStoneMask(World world, LivingEntity livingEntity, ItemStack itemStack) {
         if (itemStack.getNbt() == null) {
             NbtCompound nbt = new NbtCompound();
@@ -79,6 +89,12 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
         }
     }
 
+    /**
+     * Triggers the StoneMaskItem to its Awakening state only if its currently in its Idle state
+     * @param livingEntity has mask equipped
+     * @param itemStack the mask itself
+     * @return true if successful activation
+     */
     public boolean activateStoneMask(LivingEntity livingEntity, ItemStack itemStack){
         if (itemStack.getNbt() != null) {
             NbtCompound nbtCompound = itemStack.getNbt();
@@ -125,10 +141,10 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", this::idleState));
+        controllers.add(new AnimationController<>(this, "controller", this::play));
     }
 
-    private PlayState idleState(AnimationState<StoneMaskItem> animationState) {
+    private PlayState play(AnimationState<StoneMaskItem> animationState) {
         AnimationController<StoneMaskItem> controller = animationState.getController();
 
         Entity entity = animationState.getData(DataTickets.ENTITY);
@@ -139,7 +155,7 @@ public class StoneMaskItem extends ArmorItem implements GeoItem {
 
         Iterator<ItemStack> itemStackIterator = entity.getArmorItems().iterator();
         ItemStack head = itemStackIterator.next();
-        if (head.isOf(this.asItem())) {
+        if (head.getItem() instanceof StoneMaskItem) {
             if (head.getNbt() != null) {
                 NbtCompound nbt =  head.getNbt();
                 if (nbt.contains(NBT)) {
